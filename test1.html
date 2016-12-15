@@ -1,0 +1,52 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+function trim(str) {
+  if (String.prototype.trim) {
+    return str.trim();
+  }
+  return str.replace(/(^\s*)|(\s*$)/g, '');
+}
+
+function getTagName (html) {
+  var i = html.indexOf(' ');
+  if (i === -1) {
+    var tagName = html.slice(1, -1);
+  } else {
+    var tagName = html.slice(1, i + 1);
+  }
+  tagName = trim(tagName).toLowerCase();
+  if (tagName.slice(0, 1) === '/') tagName = tagName.slice(1);
+  if (tagName.slice(-1) === '/') tagName = tagName.slice(0, -1);
+  return tagName;
+}
+
+function getAttrs (html) {
+  var i = html.indexOf(' ');
+  if (i === -1) {
+    return {
+      html:    '',
+      closing: (html[html.length - 2] === '/')
+    };
+  }
+  html = trim(html.slice(i + 1, -1));
+  var isClosing = (html[html.length - 1] === '/');
+  if (isClosing) html = trim(html.slice(0, -1));
+  return {
+    html:    html,
+    closing: isClosing
+  };
+}
+</script>
+<html>
+<div id="result">
+</div>
+
+<script>
+var str = " <html> <input id='test' />";
+var obj = new Object();
+obj = getAttrs(str);
+$("#result").html(obj.html);
+console.log(obj.html);
+console.log(obj.closing);
+</script>
+</html>

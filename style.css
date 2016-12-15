@@ -1,0 +1,24 @@
+input[type=text],textarea {
+  display: block;
+  width: 100%;
+  font-size: 1.2em;
+  font-family: "sans-serif";
+}
+
+.log {
+  height: 48em;
+  background: #dee;
+  margin-right: 1em;
+}
+.code {
+  height: 48em;
+  margin-right: 1em;
+}
+
+.block {
+  width:40%;
+  display: inline-block;
+}
+.marginLeft {
+  margin-left: 5%;
+}
