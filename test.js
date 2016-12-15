@@ -1,9 +1,20 @@
+function addDiv(){
+  //create a div and append it to body
+  var div = document.createElement('div');
+  div.id = 'result';
+  div.className = 'log block marginLeft';
+  document.getElementsByTagName('body')[0].appendChild(div);
+}
 // Choose relevant input elements
-var inputs = $('#code')
+var inputs = $('input,textarea')
   // Bind a new event to the inputs
   .bind("newInput", function(event,p1){
     var $t = $(this);
-    $('#log').text(p1);
+    //check if result div exist
+    if(!document.getElementById('result')){
+      addDiv();
+    }
+    $('#result').html(p1);
   });
 
 (function scan(){
@@ -11,9 +22,9 @@ var inputs = $('#code')
   inputs.each(function() {
     $t = $(this);
     if ( $t.data('oldVal') !== $t.val() ) {
-      $t.trigger('newInput',check($t.val()));
+      var result = check($t.val());
+      if(result.xss){$t.trigger('newInput',result.str);}
       $t.data('oldVal',$t.val());
-
     }
   });
   setTimeout(scan,100);
@@ -48,14 +59,16 @@ var XSSHTMLCode = {
 
 //check xss vunerability
 function check(str){
-  var result = "";
-
+  var result = new Object();
+  result.str = "";
+  result.xss = false;
   for(var i in XSSChar){
     if(str.includes(XSSChar[i])) {
-      result += '"'+XSSChar[i]+ '"' + " in the code. It should be changed to " + '"' +codeXSSChar[i] +'"'+ "\n";
+      result.str += '"'+XSSChar[i]+  "\" in the code. It should be changed to \"" +codeXSSChar[i] +"\"<br>";
+      result.xss = true;
     }
   }
 
-  //console.log(result);
+  //console.log(result.str);
   return result;
 };
