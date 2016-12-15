@@ -6,7 +6,7 @@ input[type=text],textarea {
 }
 
 .log {
-  height: 48em;
+  height: 30em;
   background: #dee;
   margin-right: 1em;
 }
@@ -17,8 +17,9 @@ input[type=text],textarea {
 
 .block {
   width:40%;
-  display: inline-block;
+  display: block;
 }
 .marginLeft {
-  margin-left: 5%;
+  margin-left: 25%;
 }
+
