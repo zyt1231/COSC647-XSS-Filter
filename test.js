@@ -6,17 +6,6 @@ function addDiv(){
   document.getElementsByTagName('body')[0].appendChild(div);
 }
 // Choose relevant input elements
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-var inputs = $('#code')
-// Bind a new event to the inputs
-    .bind("newInput", function (event, p1) {
-        var $t = $(this);
-        $('#log').text(p1);
-    });
-=======
->>>>>>> Stashed changes
 var inputs = $('input,textarea')
   // Bind a new event to the inputs
   .bind("newInput", function(event,p1){
@@ -27,21 +16,9 @@ var inputs = $('input,textarea')
     }
     $('#result').html(p1);
   });
->>>>>>> origin/master
 
-(function scan() {
+(function scan(){
 
-<<<<<<< HEAD
-    inputs.each(function () {
-        $t = $(this);
-        if ($t.data('oldVal') !== $t.val()) {
-            $t.trigger('newInput', check($t.val()));
-            $t.data('oldVal', $t.val());
-
-        }
-    });
-    setTimeout(scan, 100);
-=======
   inputs.each(function() {
     $t = $(this);
     if ( $t.data('oldVal') !== $t.val() ) {
@@ -51,49 +28,36 @@ var inputs = $('input,textarea')
     }
   });
   setTimeout(scan,100);
->>>>>>> origin/master
 })();
 
 //xss type vunerability
-var XSSChar = ['&', '<', '>', '\'', '"', '/'];
+var XSSChar = ['&', '<', '>', '\'','"', '/'];
 var codeXSSChar = ['&amp', '&lt', '&gt', '&quot', '&#x27', '&3x2F'];
 
 var XSSHTMLCode = {
-    a: ['target', 'href', 'title'],
-    abbr: ['title'],
-    area: ['shape', 'coords', 'href', 'alt'],
-    audio: ['autoplay', 'controls', 'loop', 'preload', 'src'],
-    blockquote: ['cite'],
-    col: ['align', 'valign', 'span', 'width'],
-    colgroup: ['align', 'valign', 'span', 'width'],
-    font: ['color', 'size', 'face'],
-    img: ['src', 'alt', 'title', 'width', 'height'],
-    ins: ['datetime'],
-    table: ['width', 'border', 'align', 'valign'],
-    tbody: ['align', 'valign'],
-    td: ['width', 'rowspan', 'colspan', 'align', 'valign'],
-    tfoot: ['align', 'valign'],
-    th: ['width', 'rowspan', 'colspan', 'align', 'valign'],
-    thead: ['align', 'valign'],
-    tr: ['rowspan', 'align', 'valign'],
-    video: ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width'],
-    div: ['attr']
+  a:      ['target', 'href', 'title'],
+  abbr:   ['title'],
+  area:   ['shape', 'coords', 'href', 'alt'],
+  audio:  ['autoplay', 'controls', 'loop', 'preload', 'src'],
+  blockquote: ['cite'],
+  col:    ['align', 'valign', 'span', 'width'],
+  colgroup: ['align', 'valign', 'span', 'width'],
+  font:   ['color', 'size', 'face'],
+  img:    ['src', 'alt', 'title', 'width', 'height'],
+  ins:    ['datetime'],
+  table:  ['width', 'border', 'align', 'valign'],
+  tbody:  ['align', 'valign'],
+  td:     ['width', 'rowspan', 'colspan', 'align', 'valign'],
+  tfoot:  ['align', 'valign'],
+  th:     ['width', 'rowspan', 'colspan', 'align', 'valign'],
+  thead:  ['align', 'valign'],
+  tr:     ['rowspan', 'align', 'valign'],
+  video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width'],
+  div:    ['attr']
 };
 
 
 //check xss vunerability
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-function check(str) {
-    var result = "";
-
-    for (var i in XSSChar) {
-        if (str.includes(XSSChar[i])) {
-            result += '"' + XSSChar[i] + '"' + " in the code. It should be changed to " + '"' + codeXSSChar[i] + '"' + "\n";
-        }
-=======
->>>>>>> Stashed changes
 function check(str){
   var result = new Object();
   result.str = "";
@@ -102,37 +66,9 @@ function check(str){
     if(str.includes(XSSChar[i])) {
       result.str += '"'+XSSChar[i]+  "\" in the code. It should be changed to \"" +codeXSSChar[i] +"\"<br>";
       result.xss = true;
-<<<<<<< Updated upstream
-=======
->>>>>>> origin/master
->>>>>>> Stashed changes
     }
+  }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-    //console.log(result);
-    return result;
-=======
->>>>>>> Stashed changes
   //console.log(result.str);
   return result;
->>>>>>> origin/master
 };
-
-//check if the tag in string
-function CheckTags(str) {
-    var result = "";
-    var string = "<div>" + str + "</div>";
-    $(function () {
-        var $elements = $(string);//this turns your string into real html
-        for(var key in XSSHTMLCode){
-            if ($elements.find(key).length>0) {
-                result += '<' + key + '>' + " in the string. " + "\n";
-                console.log(result);
-            };
-        }
-    });
-}
-console.log(CheckTags("<a></a><thead></thead>"));
-
