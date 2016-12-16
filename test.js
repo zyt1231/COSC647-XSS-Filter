@@ -78,7 +78,9 @@ function check(str) {
 //check if the tag in string
 function CheckTags(str) {
     var string = "<div>" + str + "</div>";
-    $(function (result) {
+    var test = "test";
+    $(function () {
+        
         var $elements = $(string);//this turns your string into real html
         for (var key in XSSHTMLCode) {
             var element = $elements.find(key);
@@ -86,9 +88,9 @@ function CheckTags(str) {
             if (element.length > 0) {
                 attrs.forEach(function(attr){
                     if (element.attr(attr)){
-                        console.log(element.attr(attr));
-                        result = 'Found <' + key + '>' + " in the string with attribute " + attr + " = " + element.attr(attr) + "\n";
-                        console.log(result);
+                        // console.log(element.attr(attr));
+                        var output = 'Found <' + key + '>' + " in the string with attribute " + attr + " = " + element.attr(attr) + "\n";
+                        console.log(output);
                     }
                 });
             };
