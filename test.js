@@ -5,6 +5,13 @@ function addDiv() {
     div.className = 'log block marginLeft';
     document.getElementsByTagName('body')[0].appendChild(div);
 }
+
+var html = {
+  r1: "",
+  r2: "",
+  r3: ""
+};
+
 // Choose relevant input elements
 var inputs = $('input,textarea')
 // Bind a new event to the inputs
@@ -25,11 +32,12 @@ var inputs = $('input,textarea')
             var string = $t.val().toLowerCase();
             var result1 = CheckSymbel(string);
             var result2 = CheckTags(string);
-            var result = result1 + result2;
-           if(result.length > 0) {
-                $t.trigger('newInput', result);
-            }
-            $t.data('oldVal', $t.val());
+            var result3 = result1 + result2;
+            if(result3.length > 0 ) html["r" + $t.attr("id")] = "Input" + $t.attr("id") + ":</br>" + result3;
+            else html["r" + $t.attr("id")] = result3;
+            var result = html.r1 + html.r2 + html.r3;
+            if(result.length > 0){$t.trigger('newInput',result);}
+            $t.data('oldVal',$t.val());
         }
     });
     setTimeout(scan, 100);
