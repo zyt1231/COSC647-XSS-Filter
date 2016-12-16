@@ -72,3 +72,19 @@ function check(str){
   //console.log(result.str);
   return result;
 };
+
+//check if the tag in string
+function CheckTags(str) {
+    var result = "";
+    var string = "<div>" + str + "</div>";
+    $(function () {
+        var $elements = $(string);//this turns your string into real html
+        for(var key in XSSHTMLCode){
+            if ($elements.find(key).length>0) {
+                result += '<' + key + '>' + " in the string. " + "\n";
+                console.log(result);
+            };
+        }
+    });
+}
+console.log(CheckTags("<a></a><thead></thead>"));
