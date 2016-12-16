@@ -76,18 +76,15 @@ function check(str) {
 };
 
 //check if the tag in string
-
 function CheckTags(str) {
     var string = "<div>" + str + "</div>";
     $(function (result) {
         var $elements = $(string);//this turns your string into real html
         for (var key in XSSHTMLCode) {
             var element = $elements.find(key);
-            // console.log("values:" + XSSHTMLCode[key]);
             var attrs = XSSHTMLCode[key]
             if (element.length > 0) {
                 attrs.forEach(function(attr){
-                    // console.log(attr);
                     if (element.attr(attr)){
                         console.log(element.attr(attr));
                         result = 'Found <' + key + '>' + " in the string with attribute " + attr + " = " + element.attr(attr) + "\n";
