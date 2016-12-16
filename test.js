@@ -57,7 +57,7 @@ function CheckTags(str) {
                 attrs.forEach(function(attr){
                     if (element.attr(attr)){
                         //console.log(element.attr(attr));
-                        result += 'XSS Vulnerability: &lt;' + key + '&gt; ' + attr + " = <br/>";
+                        result += 'XSS Vulnerability: &lt;' + key + '&gt; ' + attr + " <br/>";
                     }
                 });
             };
