@@ -87,4 +87,4 @@ function CheckTags(str) {
         }
     });
 }
-console.log(CheckTags("<a></a><thead></thead>"));
+CheckTags("<a></a><thead></thead>");
