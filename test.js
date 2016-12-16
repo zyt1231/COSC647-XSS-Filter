@@ -22,7 +22,10 @@ var inputs = $('input,textarea')
     inputs.each(function () {
         $t = $(this);
         if ($t.data('oldVal') !== $t.val()) {
-            var result = check($t.val());
+            var string = $t.val().toLowerCase();
+            var result1 = CheckSymbel(string);
+            var result2 = CheckTags(string);
+            var result = result1 + result2;
            if(result.length > 0) {
                 $t.trigger('newInput', result);
             }
@@ -32,8 +35,8 @@ var inputs = $('input,textarea')
     setTimeout(scan, 100);
 })();
 
+var XSSChar = ['&', '<', '>', '\'','"', '/'];
 var blackList = {
-  script: [],
   img: ['src', 'onmouseover', 'onerror', 'dynsrc', 'lowsrc'],
   iframe: ['src'],
   input: ['src'],
@@ -43,7 +46,7 @@ var blackList = {
   link: ['rel'],
   a: ['href'],
   video: ['onerror'],
-  php: ['echo']
+  div: ['attr', 'onmouseover', ]
 };
 
 function CheckTags(str) {
@@ -57,11 +60,33 @@ function CheckTags(str) {
                 attrs.forEach(function(attr){
                     if (element.attr(attr)){
                         //console.log(element.attr(attr));
-                        result += 'XSS Vulnerability: &lt;' + key + '&gt; ' + attr + " <br/>";
+                        result += 'XSS Vulnerability: user input contains &lt;' + key + ' ' + attr + "= &gt; <br/>";
                     }
                 });
             };
         }
     //console.log(result);
     return result;
+}
+
+
+//check xss vulnerability symbel
+function CheckSymbel(str){
+  var result = "";
+  var content = str.replace(/[^a-zA-Z<]+/g, '');
+  if(content.includes("<script")) result += "XSS Vulnerability: user input contains &lt;script&gt;.<br/>";
+  for(var i in XSSChar){
+    if(str.includes(XSSChar[i])) result += "XSS Vulnerability: user input contains " + XSSChar[i] + ".<br/>";
+  }
+  //find php code
+  var checkPHP = str.replace(/ /g, ";");
+  if(checkPHP.includes("<?php")){
+    var startPHP = checkPHP.indexOf("<?php");
+    var endPHP = checkPHP.indexOf("?>");
+    var temp = "";
+    if(endPHP > startPHP) temp = checkPHP.slice(startPHP, endPHP);
+    else temp = checkPHP.slice(startPHP);
+    if(temp.includes("echo")) result += "XSS Vulnerability: user input contains PHP code and there is unchecked output inside PHP code.<br/>";
+  }
+  return result;
 }
