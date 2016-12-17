@@ -81,11 +81,13 @@ function CheckTags(str) {
 //check xss vulnerability symbel
 function CheckSymbel(str){
   var result = "";
+  //special character
+  for(var i in XSSChar){
+    if(str.includes(XSSChar[i])) result += "This may have XSS Vulnerability: user input contains " + XSSChar[i] + ".<br/>";
+  }
+  //script
   var content = str.replace(/[^a-zA-Z<]+/g, '');
   if(content.includes("<script")) result += "XSS Vulnerability: user input contains &lt;script&gt;.<br/>";
-  for(var i in XSSChar){
-    if(str.includes(XSSChar[i])) result += "XSS Vulnerability: user input contains " + XSSChar[i] + ".<br/>";
-  }
   //find php code
   var checkPHP = str.replace(/ /g, ";");
   if(checkPHP.includes("<?php")){
